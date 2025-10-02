@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import InfoLabel from '../ui/components/InfoLabel';
 
 interface Business {
   name: string;
@@ -16,6 +17,7 @@ interface Business {
 
 interface BusinessInfoProps {
   business: Business;
+  id?: string;
 }
 
 const BusinessInfo = ({ business }: BusinessInfoProps) => {
@@ -36,7 +38,7 @@ const BusinessInfo = ({ business }: BusinessInfoProps) => {
       </div>
       <div className="space-y-4 text-sm text-gray-600 w-full">
         <div className="flex items-start gap-4">
-          <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="address-label">Address</span>
+          <InfoLabel id="address-label">Address</InfoLabel>
           <div className="text-left" data-testid="address-values">
             <p className="text-[#131316] font-normal">{business.address.street}</p>
             <p className="text-[#131316] font-normal">{business.address.suite}</p>
@@ -44,11 +46,11 @@ const BusinessInfo = ({ business }: BusinessInfoProps) => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="email-label">Email</span>
+          <InfoLabel id="email-label">Email</InfoLabel>
           <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="email-value">{business.email}</p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="phone-label">Phone</span>
+          <InfoLabel id="phone-label">Phone</InfoLabel>
           <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="phone-value">{business.phone}</p>
         </div>
       </div>

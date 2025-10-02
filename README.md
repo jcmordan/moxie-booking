@@ -23,19 +23,19 @@ A responsive booking system for spa appointments built with Next.js, TypeScript,
 
 ```
 src/
-├── app/
-│   ├── components/          # Reusable UI components
-│   │   ├── BusinessInfo.tsx
-│   │   ├── ContactInformation.tsx
-│   │   ├── PaymentInformation.tsx
-│   │   └── Confirmation.tsx
-│   ├── __tests__/          # Unit tests
-│   │   └── BusinessInfo.test.tsx
-│   └── views/              # Page-level components
-│       └── BookingView.tsx
-└── public/
-    └── gold_spa_logo.png
+├── app/                    # Next.js app directory, contain pages and routing
+├── components/             # Business-specific components
+├── ui/                     # Generic UI components
+├── views/                  # Page-level components
+└── public/                 # Static assets
 ```
+
+### Folder Organization
+
+- **`src/components/`**: Business-specific components that contain domain logic and are tied to the booking system
+- **`src/ui/`**: Generic, reusable UI components used for layout, form elements, and common interface patterns
+- **`src/views/`**: Page-level components that orchestrate the overall application flow
+- **`src/app/`**: Next.js app directory with pages and layouts
 
 ## 🧪 Testing
 
@@ -177,3 +177,5 @@ If asked to add SMS opt-in functionality, I would:
 - Tests focus on functionality rather than styling
 - BusinessInfo component is designed for reusability
 - Form state persists across steps in the booking flow
+- UI components are separated from business logic for better maintainability
+- Generic UI components (`ui/components/`) can be reused across different parts of the application
