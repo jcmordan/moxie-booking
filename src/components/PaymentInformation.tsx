@@ -44,11 +44,9 @@ export default function PaymentInformation({ data, onDataChange, onNext, onSubmi
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      onSubmit();
-    }
+  const handleSubmit = (formData: BookingData) => {
+    onDataChange(formData);
+    onNext();
   };
 
   const handleInputChange = (field: keyof BookingData, value: string | boolean) => {
@@ -91,7 +89,7 @@ export default function PaymentInformation({ data, onDataChange, onNext, onSubmi
         <Title className="mb-2" id="payment-title">Secure your appointment by card</Title>
         <p className="text-sm text-gray-600 mb-6">A credit or debit card is required to secure your appointment.</p>
         <FormProvider {...formMethods}>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form className="space-y-4">
             <div>
               <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
                 Card Information
@@ -185,7 +183,7 @@ export default function PaymentInformation({ data, onDataChange, onNext, onSubmi
 
       <div className="fixed bottom-6 right-6">
         <button
-          onClick={handleSubmit}
+          onClick={formMethods.handleSubmit(handleSubmit)}
           className="bg-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors shadow-lg"
         >
           Book appointment

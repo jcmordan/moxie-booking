@@ -6,6 +6,7 @@ import BusinessInfo from './BusinessInfo';
 import Title from '../ui/components/Title';
 import FormTextInput from '../ui/components/FormTextInput';
 import FormTextArea from '../ui/components/FormTextArea';
+import BottomBar from '../ui/components/ButtonBar';
 
 interface ContactInformationProps {
   data: BookingData;
@@ -25,53 +26,50 @@ export default function ContactInformation({ data, onDataChange, onNext }: Conta
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <BusinessInfo />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
+          <BusinessInfo />
 
-      <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 lg:w-1/2 gap-6">
-        <Title id="contact-title">Enter your details below</Title>
-        <FormProvider {...formMethods}>
-          <form id="contact-form" onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-4">
-            <FormTextInput
-              name="fullName"
-              label="Full Name"
-              type="text"
-              required={true}
-            />
+          <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 lg:w-1/2 gap-6">
+            <Title id="contact-title">Enter your details below</Title>
+            <FormProvider {...formMethods}>
+              <form id="contact-form" className="space-y-4">
+                <FormTextInput
+                  name="fullName"
+                  label="Full Name"
+                  type="text"
+                  required={true}
+                />
 
-            <FormTextInput
-              name="email"
-              label="Email"
-              type="email"
-              required={true}
-            />
+                <FormTextInput
+                  name="email"
+                  label="Email"
+                  type="email"
+                  required={true}
+                />
 
-            <FormTextInput
-              name="phone"
-              label="Phone"
-              type="tel"
-              required={true}
-            />
+                <FormTextInput
+                  name="phone"
+                  label="Phone"
+                  type="tel"
+                  required={true}
+                />
 
-            <FormTextArea
-              name="message"
-              label="Visit reason"
-              required={true}
-              rows={3}
-            />
-          </form>
-        </FormProvider>
+                <FormTextArea
+                  name="message"
+                  label="Visit reason"
+                  required={true}
+                  rows={3}
+                />
+              </form>
+            </FormProvider>
+          </div>
+        </div>
       </div>
-
-      <div className="fixed bottom-6 right-6">
-        <button
-          type="submit"
-          form="contact-form"
-          className="bg-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors shadow-lg"
-        >
-          Continue
-        </button>
-      </div>
+      <BottomBar onClick={formMethods.handleSubmit(onSubmit)}>
+        Continue
+      </BottomBar>
     </div>
   );
 }
