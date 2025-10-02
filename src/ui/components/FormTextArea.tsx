@@ -1,4 +1,5 @@
 import { useController, useFormContext, FieldPath, FieldValues } from 'react-hook-form';
+import { createRequiredValidator } from '@/utils/validators';
 
 interface FormTextAreaProps<T extends FieldValues = FieldValues> {
   name: FieldPath<T>;
@@ -24,7 +25,7 @@ const FormTextArea = <T extends FieldValues = FieldValues>({
   } = useController({
     name,
     control,
-    rules: { required: required ? `${label} is required` : false }
+    rules: required ? createRequiredValidator(label) : {}
   });
 
   return (

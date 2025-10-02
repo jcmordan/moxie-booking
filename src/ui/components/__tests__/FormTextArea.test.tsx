@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useForm, FormProvider } from 'react-hook-form'
 import FormTextArea from '../FormTextArea'
@@ -92,8 +92,74 @@ describe('FormTextArea', () => {
         />
       </TestWrapper>
     )
-    
+
     const textarea = screen.getByRole('textbox')
     expect(textarea).toHaveAttribute('rows', '5')
+  })
+
+  it('validates required fields cannot be empty', async () => {
+    const TestForm = () => {
+      const methods = useForm()
+      const onSubmit = (data: any) => console.log(data)
+
+      return (
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormTextArea
+              name="test-textarea"
+              label="Test Label"
+              required={true}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </FormProvider>
+      )
+    }
+
+    render(<TestForm />)
+
+    const submitButton = screen.getByText('Submit')
+
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
+
+    expect(screen.getByText('Test Label is required')).toBeInTheDocument()
+  })
+
+  it('validates required fields cannot contain only whitespace', async () => {
+    const TestForm = () => {
+      const methods = useForm()
+      const onSubmit = (data: any) => console.log(data)
+
+      return (
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormTextArea
+              name="test-textarea"
+              label="Test Label"
+              required={true}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </FormProvider>
+      )
+    }
+
+    render(<TestForm />)
+
+    const textarea = screen.getByRole('textbox')
+
+    await act(async () => {
+      fireEvent.change(textarea, { target: { value: '   \n  \t  ' } })
+    })
+
+    const submitButton = screen.getByText('Submit')
+
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
+
+    expect(screen.getByText('Test Label cannot contain only whitespace')).toBeInTheDocument()
   })
 })

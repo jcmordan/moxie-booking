@@ -1,12 +1,12 @@
 'use client';
 
 import { FormProvider, useForm } from 'react-hook-form';
-import { BookingData } from '../views/BookingView';
+import { BookingData } from '@/views/BookingView';
 import BusinessInfo from './BusinessInfo';
-import Title from '../ui/components/Title';
-import FormTextInput from '../ui/components/FormTextInput';
-import FormTextArea from '../ui/components/FormTextArea';
-import BottomBar from '../ui/components/ButtonBar';
+import Title from '@/ui/components/Title';
+import FormTextInput from '@/ui/components/FormTextInput';
+import FormTextArea from '@/ui/components/FormTextArea';
+import BottomBar from '@/ui/components/ButtonBar';
 
 interface ContactInformationProps {
   data: BookingData;
@@ -30,11 +30,10 @@ export default function ContactInformation({ data, onDataChange, onNext }: Conta
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
           <BusinessInfo />
-
           <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 lg:w-1/2 gap-6">
             <Title id="contact-title">Enter your details below</Title>
             <FormProvider {...formMethods}>
-              <form id="contact-form" className="space-y-4">
+              <form id="contact-form" className="flex flex-col gap-6">
                 <FormTextInput
                   name="fullName"
                   label="Full Name"

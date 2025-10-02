@@ -1,4 +1,5 @@
 import { useController, useFormContext, FieldPath, FieldValues } from 'react-hook-form';
+import { createRequiredValidator } from '@/utils/validators';
 
 interface FormTextInputProps<T extends FieldValues = FieldValues> {
     id?: string;
@@ -8,6 +9,7 @@ interface FormTextInputProps<T extends FieldValues = FieldValues> {
     placeholder?: string;
     required?: boolean;
     className?: string;
+    onChangeTransform?: (value: string) => string;
 }
 
 const FormTextInput = <T extends FieldValues = FieldValues>({
@@ -17,7 +19,8 @@ const FormTextInput = <T extends FieldValues = FieldValues>({
     type = 'text',
     placeholder = 'Input text',
     required = false,
-    className = ''
+    className = '',
+    onChangeTransform
 }: FormTextInputProps<T>) => {
     
     const { control } = useFormContext<T>();
@@ -27,8 +30,14 @@ const FormTextInput = <T extends FieldValues = FieldValues>({
     } = useController({
         name,
         control,
-        rules: { required: required ? `${label} is required` : false }
+        rules: required ? createRequiredValidator(label) : {}
     });
+
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        const rawValue = event.target.value ?? '';
+        const nextValue = onChangeTransform ? onChangeTransform(rawValue) : rawValue;
+        field.onChange(nextValue);
+    };
 
     return (
         <div className={className}>
@@ -38,7 +47,10 @@ const FormTextInput = <T extends FieldValues = FieldValues>({
             <input
                 id={id}
                 data-testid={id}
-                {...field}
+                name={field.name}
+                value={field.value ?? ''}
+                onChange={handleChange}
+                onBlur={field.onBlur}
                 type={type}
                 className={`w-full px-3 py-2 border rounded-lg text-[#888896] focus:outline-none focus:ring-2 focus:ring-purple-500 ${error ? 'border-red-500' : 'border-gray-300'
                     }`}
