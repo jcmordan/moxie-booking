@@ -101,7 +101,7 @@ describe('FormTextInput', () => {
   it('validates required fields cannot be empty', async () => {
     const TestForm = () => {
       const methods = useForm()
-      const onSubmit = (data: any) => console.log(data)
+      const onSubmit = (data: unknown) => console.log(data)
 
       return (
         <FormProvider {...methods}>
@@ -131,7 +131,7 @@ describe('FormTextInput', () => {
   it('validates required fields cannot contain only whitespace', async () => {
     const TestForm = () => {
       const methods = useForm()
-      const onSubmit = (data: any) => console.log(data)
+      const onSubmit = (data: unknown) => console.log(data)
 
       return (
         <FormProvider {...methods}>

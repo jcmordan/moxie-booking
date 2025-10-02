@@ -22,14 +22,14 @@ describe("validators", () => {
       const validator = createRequiredValidator("Test Field");
       const validateFn = validator.validate;
 
-      expect(validateFn(null as any)).toBe(true);
+      expect(validateFn(null as unknown)).toBe(true);
     });
 
     it("validates undefined as required", () => {
       const validator = createRequiredValidator("Test Field");
       const validateFn = validator.validate;
 
-      expect(validateFn(undefined as any)).toBe(true);
+      expect(validateFn(undefined as unknown)).toBe(true);
     });
 
     it("validates whitespace-only string as invalid", () => {
@@ -121,7 +121,9 @@ describe("validators", () => {
     describe("validate function", () => {
       it("returns true for valid 3-digit CVV", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate("123")).toBe(true);
         expect(validate("000")).toBe(true);
         expect(validate("999")).toBe(true);
@@ -129,7 +131,9 @@ describe("validators", () => {
 
       it("returns error message for empty CVV", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate("")).toBe("CVV is required");
         expect(validate(null)).toBe("CVV is required");
         expect(validate(undefined)).toBe("CVV is required");
@@ -137,7 +141,9 @@ describe("validators", () => {
 
       it("returns error message for whitespace-only CVV", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate("   ")).toBe("CVV is required");
         expect(validate("\t\t\t")).toBe("CVV is required");
         expect(validate("\n\n\n")).toBe("CVV is required");
@@ -146,7 +152,9 @@ describe("validators", () => {
 
       it("returns error message for CVV with wrong length", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate("12")).toBe("CVV must be exactly 3 digits");
         expect(validate("1234")).toBe("CVV must be exactly 3 digits");
         expect(validate("1")).toBe("CVV must be exactly 3 digits");
@@ -155,7 +163,9 @@ describe("validators", () => {
 
       it("returns true for CVV with leading/trailing spaces (trimmed)", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate(" 123 ")).toBe(true);
         expect(validate("\t123\t")).toBe(true);
         expect(validate("\n123\n")).toBe(true);
@@ -163,14 +173,18 @@ describe("validators", () => {
 
       it("returns true for numeric values that convert to 3 digits", () => {
         const validator = createCVVValidator("CVV");
-        const validate = validator.validate as Function;
+        const validate = validator.validate as (
+          value: string
+        ) => string | boolean;
         expect(validate(123)).toBe(true);
         expect(validate(456)).toBe(true);
       });
 
        it("returns error for non-string values that do not convert to 3 digits", () => {
          const validator = createCVVValidator("CVV");
-         const validate = validator.validate as Function;
+         const validate = validator.validate as (
+           value: string
+         ) => string | boolean;
          expect(validate(true)).toBe("CVV must contain only numbers");
          expect(validate(12)).toBe("CVV must be exactly 3 digits");
          expect(validate(1234)).toBe("CVV must be exactly 3 digits");
@@ -178,7 +192,9 @@ describe("validators", () => {
 
        it("returns error for non-numeric characters", () => {
          const validator = createCVVValidator("CVV");
-         const validate = validator.validate as Function;
+         const validate = validator.validate as (
+           value: string
+         ) => string | boolean;
          expect(validate("12a")).toBe("CVV must contain only numbers");
          expect(validate("abc")).toBe("CVV must contain only numbers");
          expect(validate("1-2")).toBe("CVV must contain only numbers");
