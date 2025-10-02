@@ -1,41 +1,55 @@
 import Image from 'next/image';
 
-interface GoldSpaInfoProps {
-  className?: string;
+interface Business {
+  name: string;
+  logo: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
+  email: string;
+  phone: string;
 }
 
-const BusinessInfo = ({ className = "" }: GoldSpaInfoProps) => {
+interface BusinessInfoProps {
+  business: Business;
+}
+
+const BusinessInfo = ({ business }: BusinessInfoProps) => {
   return (
-    <div className={`flex flex-col items-center text-center gap-4 bg-white rounded-lg shadow-lg p-4 w-113 h-82 ${className}`}>
+    <div className={`flex flex-col items-center text-center gap-4 bg-white rounded-lg shadow-lg p-4 w-113 h-82`}>
       <div className="flex flex-col w-full items-center gap-4">
         <div className="w-20 h-20 rounded-full" data-testid="business-logo">
           <Image
-            src="/gold_spa_logo.png"
-            alt="Gold Spa Logo"
+            src={business.logo}
+            alt={`${business.name} Logo`}
             width={80}
             height={80}
             className="w-full h-full"
           />
         </div>
 
-        <h3 className="text-lg font-bold text-[#131316]" data-testid="business-title">Gold Spa</h3>
+        <h3 className="text-lg font-bold text-[#131316]" data-testid="business-title">{business.name}</h3>
       </div>
       <div className="space-y-4 text-sm text-gray-600 w-full">
         <div className="flex items-start gap-4">
           <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="address-label">Address</span>
           <div className="text-left" data-testid="address-values">
-            <p className="text-[#131316] font-normal">2525 Camino del Rio S</p>
-            <p className="text-[#131316] font-normal">Suite 315 Room 8</p>
-            <p className="text-[#131316] font-normal">San Diego, CA 92108</p>
+            <p className="text-[#131316] font-normal">{business.address.street}</p>
+            <p className="text-[#131316] font-normal">{business.address.suite}</p>
+            <p className="text-[#131316] font-normal">{business.address.city}, {business.address.state} {business.address.zipCode}</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="email-label">Email</span>
-          <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="email-value">goldspa@gmail.com</p>
+          <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="email-value">{business.email}</p>
         </div>
         <div className="flex items-center gap-4">
           <span className="font-normal text-base text-[#888896] w-20 text-left" data-testid="phone-label">Phone</span>
-          <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="phone-value">+11 123 4567 222</p>
+          <p className="text-[#8A1D96] font-normal text-base text-left" data-testid="phone-value">{business.phone}</p>
         </div>
       </div>
     </div>

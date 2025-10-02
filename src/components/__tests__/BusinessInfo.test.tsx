@@ -10,9 +10,23 @@ jest.mock('next/image', () => ({
   ),
 }))
 
+const mockBusiness = {
+    name: 'Gold Spa',
+    logo: '/gold_spa_logo.png',
+    address: {
+        street: '2525 Camino del Rio S',
+        suite: 'Suite 315 Room 8',
+        city: 'San Diego',
+        state: 'CA',
+        zipCode: '92108'
+    },
+    email: 'goldspa@gmail.com',
+    phone: '+11 123 4567 222'
+}
+
 describe('BusinessInfo', () => {
   it('renders the business logo', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     const logoContainer = screen.getByTestId('business-logo')
     expect(logoContainer).toBeInTheDocument()
@@ -23,7 +37,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders the business title', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     const title = screen.getByTestId('business-title')
     expect(title).toBeInTheDocument()
@@ -31,7 +45,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders address label and values', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     const addressLabel = screen.getByTestId('address-label')
     expect(addressLabel).toBeInTheDocument()
@@ -45,7 +59,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders email label and value', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     const emailLabel = screen.getByTestId('email-label')
     expect(emailLabel).toBeInTheDocument()
@@ -57,7 +71,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders phone label and value', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     const phoneLabel = screen.getByTestId('phone-label')
     expect(phoneLabel).toBeInTheDocument()
@@ -69,7 +83,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders all contact information fields', () => {
-    render(<BusinessInfo />)
+      render(<BusinessInfo business={mockBusiness} />)
     
     // Check that all labels are present
     expect(screen.getByTestId('address-label')).toBeInTheDocument()
@@ -81,4 +95,30 @@ describe('BusinessInfo', () => {
     expect(screen.getByTestId('email-value')).toBeInTheDocument()
     expect(screen.getByTestId('phone-value')).toBeInTheDocument()
   })
+
+    it('renders different business information when provided', () => {
+        const differentBusiness = {
+            name: 'Test Business',
+            logo: '/test_logo.png',
+            address: {
+                street: '123 Test St',
+                suite: 'Suite 100',
+                city: 'Test City',
+                state: 'TS',
+                zipCode: '12345'
+            },
+            email: 'test@business.com',
+            phone: '+1 555 123 4567'
+        }
+
+        render(<BusinessInfo business={differentBusiness} />)
+
+        expect(screen.getByTestId('business-title')).toHaveTextContent('Test Business')
+        expect(screen.getByAltText('Test Business Logo')).toHaveAttribute('src', '/test_logo.png')
+        expect(screen.getByTestId('email-value')).toHaveTextContent('test@business.com')
+        expect(screen.getByTestId('phone-value')).toHaveTextContent('+1 555 123 4567')
+        expect(screen.getByTestId('address-values')).toHaveTextContent('123 Test St')
+        expect(screen.getByTestId('address-values')).toHaveTextContent('Suite 100')
+        expect(screen.getByTestId('address-values')).toHaveTextContent('Test City, TS 12345')
+    })
 })
