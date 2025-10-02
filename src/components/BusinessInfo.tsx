@@ -4,7 +4,7 @@ interface GoldSpaInfoProps {
   className?: string;
 }
 
-const GoldSpaInfo = ({ className = "" }: GoldSpaInfoProps) => {
+const BusinessInfo = ({ className = "" }: GoldSpaInfoProps) => {
   return (
     <div className={`flex flex-col items-center text-center gap-4 bg-white rounded-lg shadow-lg p-4 w-113 h-82 ${className}`}>
       <div className="flex flex-col w-full items-center gap-4">
@@ -42,4 +42,4 @@ const GoldSpaInfo = ({ className = "" }: GoldSpaInfoProps) => {
   );
 };
 
-export default GoldSpaInfo;
+export default BusinessInfo;

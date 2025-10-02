@@ -1,7 +1,7 @@
 'use client';
 
 import { BookingData } from '../views/BookingView';
-import GoldSpaInfo from './GoldSpaInfo';
+import BusinessInfo from './BusinessInfo';
 
 interface ConfirmationProps {
   data: BookingData;
@@ -37,7 +37,7 @@ export default function Confirmation({ data }: ConfirmationProps) {
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
         <div className="space-y-6">
           {/* Spa Information */}
-          <GoldSpaInfo />
+          <BusinessInfo />
 
           {/* Services */}
           <div className="border-t pt-6">

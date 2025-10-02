@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BookingData } from '../views/BookingView';
-import GoldSpaInfo from './GoldSpaInfo';
+import BusinessInfo from './BusinessInfo';
 
 interface ContactInformationProps {
   data: BookingData;
@@ -51,7 +51,7 @@ export default function ContactInformation({ data, onDataChange, onNext }: Conta
     <div className="flex flex-col lg:flex-row gap-6">
       {/* Spa Information Card */}
       {/* <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2"> */}
-        <GoldSpaInfo />
+      <BusinessInfo />
       {/* </div> */}
 
       {/* Contact Form Card */}
