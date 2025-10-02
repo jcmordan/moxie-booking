@@ -49,22 +49,6 @@ src/
 
 The application is deployed on Vercel with automatic CI/CD. Every commit to the `main` branch triggers a new deployment.
 
-## 📁 Code Access
-
-**Repository**: [https://github.com/jcmordan/moxie-booking](https://github.com/jcmordan/moxie-booking)
-
-**Clone the repository**:
-```bash
-git clone https://github.com/jcmordan/moxie-booking.git
-cd moxie-booking
-pnpm install
-pnpm dev
-```
-
-**Local Development**:
-- Run `pnpm dev` to start the development server
-- Run `pnpm test` to execute the test suite
-- Run `pnpm build` to create a production build
 
 ## 🧪 Testing
 
