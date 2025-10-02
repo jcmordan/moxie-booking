@@ -160,4 +160,29 @@ describe('formatters', () => {
       expect(formatExpiryDate('000')).toBe('00/0');
     });
   });
+
+  describe("CVV input transformation", () => {
+    const cvvTransform = (value: string) =>
+      value.replace(/\D/g, "").slice(0, 3);
+
+    it("filters non-numeric characters and limits to 3 digits", () => {
+      expect(cvvTransform("12a3!@#")).toBe("123");
+      expect(cvvTransform("abc")).toBe("");
+      expect(cvvTransform("1-2-3")).toBe("123");
+    });
+
+    it("limits input to maximum 3 digits", () => {
+      expect(cvvTransform("123456789")).toBe("123");
+      expect(cvvTransform("1234")).toBe("123");
+      expect(cvvTransform("123")).toBe("123");
+      expect(cvvTransform("12")).toBe("12");
+      expect(cvvTransform("1")).toBe("1");
+    });
+
+    it("handles empty and whitespace input", () => {
+      expect(cvvTransform("")).toBe("");
+      expect(cvvTransform("   ")).toBe("");
+      expect(cvvTransform("\t\t\t")).toBe("");
+    });
+  });
 });

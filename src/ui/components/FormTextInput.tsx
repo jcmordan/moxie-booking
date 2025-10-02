@@ -1,4 +1,4 @@
-import { useController, useFormContext, FieldPath, FieldValues } from 'react-hook-form';
+import { useController, useFormContext, FieldPath, FieldValues, RegisterOptions } from 'react-hook-form';
 import { createRequiredValidator } from '@/utils/validators';
 
 interface FormTextInputProps<T extends FieldValues = FieldValues> {
@@ -10,6 +10,7 @@ interface FormTextInputProps<T extends FieldValues = FieldValues> {
     required?: boolean;
     className?: string;
     onChangeTransform?: (value: string) => string;
+    validationRules?: RegisterOptions<T, FieldPath<T>>;
 }
 
 const FormTextInput = <T extends FieldValues = FieldValues>({
@@ -20,7 +21,8 @@ const FormTextInput = <T extends FieldValues = FieldValues>({
     placeholder = 'Input text',
     required = false,
     className = '',
-    onChangeTransform
+    onChangeTransform,
+    validationRules
 }: FormTextInputProps<T>) => {
     
     const { control } = useFormContext<T>();
@@ -30,7 +32,7 @@ const FormTextInput = <T extends FieldValues = FieldValues>({
     } = useController({
         name,
         control,
-        rules: required ? createRequiredValidator(label) : {}
+        rules: validationRules || (required ? createRequiredValidator(label) : {})
     });
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

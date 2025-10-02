@@ -8,6 +8,7 @@ import FormCheckbox from '@/ui/components/FormCheckbox';
 import { FormProvider, useForm } from 'react-hook-form';
 import BottomBar from '@/ui/components/ButtonBar';
 import { formatCardNumber, formatExpiryDate } from '@/utils/formatters';
+import { createCVVValidator } from '@/utils/validators';
 import Button from '@/ui/components/Button';
 
 interface PaymentInformationProps {
@@ -71,7 +72,8 @@ const PaymentInformation = ({ data, onDataChange, onNext }: PaymentInformationPr
                     type="password"
                     placeholder="CVV"
                     required={true}
-                    onChangeTransform={(value) => value.replace(/\D/g, '')}
+                    onChangeTransform={(value) => value.replace(/\D/g, '').slice(0, 3)}
+                    validationRules={createCVVValidator('CVV')}
                   />
 
                 </div>
