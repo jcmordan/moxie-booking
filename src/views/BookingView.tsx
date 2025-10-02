@@ -50,6 +50,10 @@ export default function BookingView() {
 
     const handleStepChange = (step: BookingStep) => {
         setCurrentStep(step);
+
+        if (step === 'confirmation') {
+            handleBookingSubmit();
+        }
     };
 
     const handleDataUpdate = (data: Partial<BookingData>) => {
@@ -77,11 +81,10 @@ export default function BookingView() {
                         data={bookingData}
                         onDataChange={handleDataUpdate}
                         onNext={() => handleStepChange('confirmation')}
-                        onSubmit={handleBookingSubmit}
                     />
                 );
             case 'confirmation':
-                return <Confirmation data={bookingData} />;
+                return <Confirmation />;
             default:
                 return null;
         }

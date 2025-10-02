@@ -1,75 +1,25 @@
 'use client';
 
-import { BookingData } from '../views/BookingView';
+import Image from 'next/image';
 import BusinessInfo from './BusinessInfo';
-import Title from '../ui/components/Title';
 
-interface ConfirmationProps {
-  data: BookingData;
-}
-
-export default function Confirmation({ data }: ConfirmationProps) {
-  const services = [
-    { name: 'Botox', duration: '45 mins', price: 200 },
-    { name: 'Botox', duration: '60 mins', price: 250 }
-  ];
-
-  const total = services.reduce((sum, service) => sum + service.price, 0);
+const Confirmation = () => {
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
+    <div className="flex flex-col justify-center items-center gap-4">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-135 h-82">
         <div className="flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+          <div className="w-50 h-50 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <Image src="/success.png" alt="Success" width={200} height={200} />
           </div>
-          
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your appointment has been booked!</h2>
-          <p className="text-gray-600">A confirmation has been sent to your email address.</p>
+
+          <h2 className="text-lg font-bold text-[#60606C] mb-2">Your appointment has been booked!</h2>
+          <p className="text-base text-[#131316]">A confirmation has been sent to your email address.</p>
         </div>
       </div>
-
-      <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
-        <div className="space-y-6">
-          <BusinessInfo />
-
-          <div className="border-t pt-6">
-            <Title className="mb-4" id="services-title">Services</Title>
-            <div className="space-y-3">
-              {services.map((service, index) => (
-                <div key={index} className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium text-gray-900">{service.name}</p>
-                    <p className="text-sm text-gray-600">{service.duration}</p>
-                  </div>
-                  <p className="font-semibold text-gray-900">${service.price}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="border-t pt-4 mt-4">
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-gray-900">Total</span>
-                <span className="text-xl font-bold text-gray-900">${total}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t pt-6">
-            <Title className="mb-4" id="customer-info-title">Your Information</Title>
-            <div className="space-y-2 text-sm text-gray-600">
-              <p><span className="font-medium">Name:</span> {data.fullName}</p>
-              <p><span className="font-medium">Email:</span> {data.email}</p>
-              <p><span className="font-medium">Phone:</span> {data.phone}</p>
-              {data.message && (
-                <p><span className="font-medium">Visit reason:</span> {data.message}</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <BusinessInfo />
     </div>
   );
 }
+
+export default Confirmation;

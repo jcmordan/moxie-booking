@@ -4,8 +4,9 @@ import { useBusiness } from '../contexts/BusinessContext';
 
 const BusinessInfo = () => {
   const { business } = useBusiness();
+
   return (
-    <div className={`flex flex-col items-center text-center gap-4 bg-white rounded-lg shadow-lg p-4 w-113 h-82`}>
+    <div className={`flex flex-col items-center text-center gap-4 bg-white rounded-lg shadow-lg p-4 w-135 h-82`}>
       <div className="flex flex-col w-full items-center gap-4">
         <div className="w-20 h-20 rounded-full" data-testid="business-logo">
           <Image

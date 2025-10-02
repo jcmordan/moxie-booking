@@ -14,7 +14,7 @@ interface ContactInformationProps {
   onNext: () => void;
 }
 
-export default function ContactInformation({ data, onDataChange, onNext }: ContactInformationProps) {
+const ContactInformation = ({ data, onDataChange, onNext }: ContactInformationProps) => {
   const formMethods = useForm<BookingData>({
     defaultValues: data,
     mode: 'onChange'
@@ -72,3 +72,5 @@ export default function ContactInformation({ data, onDataChange, onNext }: Conta
     </div>
   );
 }
+
+export default ContactInformation;

@@ -16,7 +16,7 @@ interface PaymentInformationProps {
   onNext: () => void;
 }
 
-export default function PaymentInformation({ data, onDataChange, onNext }: PaymentInformationProps) {
+const PaymentInformation = ({ data, onDataChange, onNext }: PaymentInformationProps) => {
   const formMethods = useForm<BookingData>({
     defaultValues: data,
     mode: 'onChange'
@@ -110,3 +110,5 @@ export default function PaymentInformation({ data, onDataChange, onNext }: Payme
     </div>
   );
 }
+
+export default PaymentInformation;
