@@ -82,21 +82,25 @@ This project was developed with AI assistance using Claude (Anthropic's AI assis
 - **"do not allow the user enter more than 3 digits on CVV"** - Input validation and user experience
 - **"deploy the project on vercel"** - Production deployment and CI/CD setup
 
-### **AI Decision Making Process:**
+### **AI Implementation Process:**
 
-- **Architecture**: AI suggested React Hook Form for form management, Context API for global state, and component composition patterns
-- **Testing**: AI recommended React Testing Library with Jest for comprehensive test coverage
-- **Deployment**: AI guided Vercel integration with automatic CI/CD
-- **Code Quality**: AI enforced TypeScript best practices and ESLint compliance
+- **Architecture**: AI implemented React Hook Form for form management, Context API for global state, and component composition patterns as requested
+- **Testing**: AI implemented React Testing Library with Jest for comprehensive test coverage as specified
+- **Deployment**: AI assisted with Vercel integration and automatic CI/CD setup as requested
+- **Code Quality**: AI implemented TypeScript best practices and ESLint compliance as instructed
 
-### **Human Oversight:**
+### **Human Decision Making:**
 
-While AI generated much of the code, all architectural decisions, business logic, and final implementations were reviewed and approved. The human developer:
-- Made final decisions on component structure and naming conventions
-- Validated all AI-generated code for correctness and business requirements
-- Ensured the implementation met the exercise requirements
-- Reviewed and refined AI-generated documentation
-- Made strategic decisions about testing approach and deployment strategy
+The human developer made all architectural and strategic decisions:
+- **Architecture**: Chose React Hook Form, Context API, and component patterns
+- **Testing**: Selected React Testing Library with Jest for test coverage
+- **Deployment**: Decided on Vercel for hosting and CI/CD
+- **Code Quality**: Established TypeScript and ESLint standards
+- **Project Structure**: Designed folder organization and component hierarchy
+- **Business Logic**: Defined form validation rules and user flow
+- **UI/UX**: Made design decisions and responsive breakpoints
+
+The AI assistant implemented these decisions and provided code generation, debugging, and documentation assistance.
 
 ### **Why AI Was Used:**
 
