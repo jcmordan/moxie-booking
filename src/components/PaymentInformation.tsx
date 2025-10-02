@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { BookingData } from '../views/BookingView';
 import BusinessInfo from './BusinessInfo';
+import Title from '../ui/components/Title';
+import FormTextInput from '../ui/components/FormTextInput';
+import { FormProvider, useForm } from 'react-hook-form';
 
 interface PaymentInformationProps {
   data: BookingData;
@@ -13,10 +16,14 @@ interface PaymentInformationProps {
 
 export default function PaymentInformation({ data, onDataChange, onNext, onSubmit }: PaymentInformationProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const formMethods = useForm<BookingData>({
+    defaultValues: data,
+    mode: 'onChange'
+  });
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!data.cardNumber.trim()) {
       newErrors.cardNumber = 'Card number is required';
     }
@@ -76,123 +83,106 @@ export default function PaymentInformation({ data, onDataChange, onNext, onSubmi
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      {/* Spa Information Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
         <BusinessInfo />
       </div>
 
-      {/* Payment Form Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure your appointment by card</h3>
+        <Title className="mb-2" id="payment-title">Secure your appointment by card</Title>
         <p className="text-sm text-gray-600 mb-6">A credit or debit card is required to secure your appointment.</p>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
-              Card Information
-            </label>
-            <input
-              type="text"
-              id="cardNumber"
-              value={data.cardNumber}
-              onChange={(e) => handleInputChange('cardNumber', formatCardNumber(e.target.value))}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.cardNumber ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="1234 1234 1234 1234"
-              maxLength={19}
-            />
-            {errors.cardNumber && (
-              <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
+        <FormProvider {...formMethods}>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
-                MM/YY
+              <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                Card Information
               </label>
               <input
                 type="text"
-                id="expiryDate"
-                value={data.expiryDate}
-                onChange={(e) => handleInputChange('expiryDate', formatExpiryDate(e.target.value))}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                  errors.expiryDate ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="MM/YY"
-                maxLength={5}
+                id="cardNumber"
+                value={data.cardNumber}
+                onChange={(e) => handleInputChange('cardNumber', formatCardNumber(e.target.value))}
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.cardNumber ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                placeholder="1234 1234 1234 1234"
+                maxLength={19}
               />
-              {errors.expiryDate && (
-                <p className="text-red-500 text-xs mt-1">{errors.expiryDate}</p>
+              {errors.cardNumber && (
+                <p className="text-red-500 text-xs mt-1">{errors.cardNumber}</p>
               )}
             </div>
 
-            <div>
-              <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
-                CVV
-              </label>
-              <input
-                type="text"
-                id="cvv"
-                value={data.cvv}
-                onChange={(e) => handleInputChange('cvv', e.target.value.replace(/\D/g, ''))}
-                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                  errors.cvv ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="CVV"
-                maxLength={4}
-              />
-              {errors.cvv && (
-                <p className="text-red-500 text-xs mt-1">{errors.cvv}</p>
-              )}
-            </div>
-          </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
+                  MM/YY
+                </label>
+                <input
+                  type="text"
+                  id="expiryDate"
+                  value={data.expiryDate}
+                  onChange={(e) => handleInputChange('expiryDate', formatExpiryDate(e.target.value))}
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.expiryDate ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  placeholder="MM/YY"
+                  maxLength={5}
+                />
+                {errors.expiryDate && (
+                  <p className="text-red-500 text-xs mt-1">{errors.expiryDate}</p>
+                )}
+              </div>
 
-          <div>
-            <label htmlFor="billingZip" className="block text-sm font-medium text-gray-700 mb-1">
-              Billing zip code
-            </label>
-            <input
-              type="text"
+              <div>
+                <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
+                  CVV
+                </label>
+                <input
+                  type="text"
+                  id="cvv"
+                  value={data.cvv}
+                  onChange={(e) => handleInputChange('cvv', e.target.value.replace(/\D/g, ''))}
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.cvv ? 'border-red-500' : 'border-gray-300'
+                    }`}
+                  placeholder="CVV"
+                  maxLength={4}
+                />
+                {errors.cvv && (
+                  <p className="text-red-500 text-xs mt-1">{errors.cvv}</p>
+                )}
+              </div>
+            </div>
+
+            <FormTextInput
               id="billingZip"
-              value={data.billingZip}
-              onChange={(e) => handleInputChange('billingZip', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.billingZip ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Input text"
+              name="billingZip"
+              label="Billing zip code"
+              type="text"
+              required={true}
             />
-            {errors.billingZip && (
-              <p className="text-red-500 text-xs mt-1">{errors.billingZip}</p>
+
+            <div className="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="agreeToTerms"
+                checked={data.agreeToTerms}
+                onChange={(e) => handleInputChange('agreeToTerms', e.target.checked)}
+                className={`mt-1 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded ${errors.agreeToTerms ? 'border-red-500' : ''
+                  }`}
+              />
+              <label htmlFor="agreeToTerms" className="text-sm text-gray-700">
+                I will pay at least 24 hours before the beginning of your appointment or you may be charged cancellation fee of $100. In the event of emergency, contact us directly. Your card will not be used in case of late cancellation and for future purchases, it will not be charged now.
+              </label>
+            </div>
+            {errors.agreeToTerms && (
+              <p className="text-red-500 text-xs mt-1">{errors.agreeToTerms}</p>
             )}
-          </div>
 
-          <div className="flex items-start space-x-3">
-            <input
-              type="checkbox"
-              id="agreeToTerms"
-              checked={data.agreeToTerms}
-              onChange={(e) => handleInputChange('agreeToTerms', e.target.checked)}
-              className={`mt-1 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded ${
-                errors.agreeToTerms ? 'border-red-500' : ''
-              }`}
-            />
-            <label htmlFor="agreeToTerms" className="text-sm text-gray-700">
-              I will pay at least 24 hours before the beginning of your appointment or you may be charged cancellation fee of $100. In the event of emergency, contact us directly. Your card will not be used in case of late cancellation and for future purchases, it will not be charged now.
-            </label>
-          </div>
-          {errors.agreeToTerms && (
-            <p className="text-red-500 text-xs mt-1">{errors.agreeToTerms}</p>
-          )}
-
-          <p className="text-xs text-gray-500">
-            By booking this appointment, you acknowledge our terms and conditions and privacy policy. Messages from Gold Spa may include...
-          </p>
-        </form>
+            <p className="text-xs text-gray-500">
+              By booking this appointment, you acknowledge our terms and conditions and privacy policy. Messages from Gold Spa may include...
+            </p>
+          </form>
+        </FormProvider>
       </div>
 
-      {/* Book Appointment Button - positioned at bottom right */}
       <div className="fixed bottom-6 right-6">
         <button
           onClick={handleSubmit}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ContactInformation from '@/components/ContactInformation';
 import PaymentInformation from '@/components/PaymentInformation';
 import Confirmation from '@/components/Confirmation';
+import { BusinessProvider } from '@/contexts/BusinessContext';
 
 export interface BookingData {
     fullName: string;
@@ -32,6 +33,20 @@ export default function BookingView() {
         billingZip: '',
         agreeToTerms: false,
     });
+
+    const businessData = {
+        name: 'Gold Spa',
+        logo: '/gold_spa_logo.png',
+        address: {
+            street: '2525 Camino del Rio S',
+            suite: 'Suite 315 Room 8',
+            city: 'San Diego',
+            state: 'CA',
+            zipCode: '92108'
+        },
+        email: 'goldspa@gmail.com',
+        phone: '+11 123 4567 222'
+    };
 
     const handleStepChange = (step: BookingStep) => {
         setCurrentStep(step);
@@ -73,10 +88,12 @@ export default function BookingView() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-            <div className="w-full max-w-6xl">
-                {renderCurrentStep()}
+        <BusinessProvider business={businessData}>
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+                <div className="w-full max-w-6xl">
+                    {renderCurrentStep()}
+                </div>
             </div>
-        </div>
+        </BusinessProvider>
     );
 }

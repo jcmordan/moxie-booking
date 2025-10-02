@@ -1,8 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { BookingData } from '../views/BookingView';
 import BusinessInfo from './BusinessInfo';
+import Title from '../ui/components/Title';
+import FormTextInput from '../ui/components/FormTextInput';
+import FormTextArea from '../ui/components/FormTextArea';
 
 interface ContactInformationProps {
   data: BookingData;
@@ -11,136 +14,59 @@ interface ContactInformationProps {
 }
 
 export default function ContactInformation({ data, onDataChange, onNext }: ContactInformationProps) {
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const formMethods = useForm<BookingData>({
+    defaultValues: data,
+    mode: 'onChange'
+  });
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!data.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
-    }
-    if (!data.email.trim()) {
-      newErrors.email = 'Email is required';
-    }
-    if (!data.phone.trim()) {
-      newErrors.phone = 'Phone is required';
-    }
-    if (!data.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      onNext();
-    }
-  };
-
-  const handleInputChange = (field: keyof BookingData, value: string) => {
-    onDataChange({ [field]: value });
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
-    }
+  const onSubmit = (formData: BookingData) => {
+    onDataChange(formData);
+    onNext();
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      {/* Spa Information Card */}
-      {/* <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2"> */}
       <BusinessInfo />
-      {/* </div> */}
 
-      {/* Contact Form Card */}
-      <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">Enter your details below</h3>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name
-            </label>
-            <input
+      <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 lg:w-1/2 gap-6">
+        <Title id="contact-title">Enter your details below</Title>
+        <FormProvider {...formMethods}>
+          <form id="contact-form" onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-4">
+            <FormTextInput
+              name="fullName"
+              label="Full Name"
               type="text"
-              id="fullName"
-              value={data.fullName}
-              onChange={(e) => handleInputChange('fullName', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.fullName ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Input text"
+              required={true}
             />
-            {errors.fullName && (
-              <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
-            )}
-          </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
+            <FormTextInput
+              name="email"
+              label="Email"
               type="email"
-              id="email"
-              value={data.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Input text"
+              required={true}
             />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-            )}
-          </div>
 
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
-            </label>
-            <input
+            <FormTextInput
+              name="phone"
+              label="Phone"
               type="tel"
-              id="phone"
-              value={data.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.phone ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Input text"
+              required={true}
             />
-            {errors.phone && (
-              <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
-            )}
-          </div>
 
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-              Visit reason
-            </label>
-            <textarea
-              id="message"
-              value={data.message}
-              onChange={(e) => handleInputChange('message', e.target.value)}
+            <FormTextArea
+              name="message"
+              label="Visit reason"
+              required={true}
               rows={3}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                errors.message ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Input text"
             />
-            {errors.message && (
-              <p className="text-red-500 text-xs mt-1">{errors.message}</p>
-            )}
-          </div>
-        </form>
+          </form>
+        </FormProvider>
       </div>
 
-      {/* Continue Button - positioned at bottom right */}
       <div className="fixed bottom-6 right-6">
         <button
-          onClick={handleSubmit}
+          type="submit"
+          form="contact-form"
           className="bg-purple-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors shadow-lg"
         >
           Continue

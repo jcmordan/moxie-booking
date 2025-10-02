@@ -2,13 +2,13 @@
 
 import { BookingData } from '../views/BookingView';
 import BusinessInfo from './BusinessInfo';
+import Title from '../ui/components/Title';
 
 interface ConfirmationProps {
   data: BookingData;
 }
 
 export default function Confirmation({ data }: ConfirmationProps) {
-  // Mock services data - in a real app this would come from props or API
   const services = [
     { name: 'Botox', duration: '45 mins', price: 200 },
     { name: 'Botox', duration: '60 mins', price: 250 }
@@ -18,10 +18,8 @@ export default function Confirmation({ data }: ConfirmationProps) {
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      {/* Confirmation Message Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
         <div className="flex flex-col items-center text-center">
-          {/* Success Icon */}
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
             <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -33,15 +31,12 @@ export default function Confirmation({ data }: ConfirmationProps) {
         </div>
       </div>
 
-      {/* Booking Summary Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
         <div className="space-y-6">
-          {/* Spa Information */}
           <BusinessInfo />
 
-          {/* Services */}
           <div className="border-t pt-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Services</h4>
+            <Title className="mb-4" id="services-title">Services</Title>
             <div className="space-y-3">
               {services.map((service, index) => (
                 <div key={index} className="flex justify-between items-center">
@@ -62,9 +57,8 @@ export default function Confirmation({ data }: ConfirmationProps) {
             </div>
           </div>
 
-          {/* Customer Information */}
           <div className="border-t pt-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Your Information</h4>
+            <Title className="mb-4" id="customer-info-title">Your Information</Title>
             <div className="space-y-2 text-sm text-gray-600">
               <p><span className="font-medium">Name:</span> {data.fullName}</p>
               <p><span className="font-medium">Email:</span> {data.email}</p>

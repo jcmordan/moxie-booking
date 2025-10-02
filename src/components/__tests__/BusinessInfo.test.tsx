@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import BusinessInfo from '../BusinessInfo'
-import InfoLabel from '../../ui/components/InfoLabel'
+import { BusinessProvider } from '../../contexts/BusinessContext'
 
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
@@ -12,52 +12,30 @@ jest.mock('next/image', () => ({
 }))
 
 const mockBusiness = {
-    name: 'Gold Spa',
-    logo: '/gold_spa_logo.png',
-    address: {
-        street: '2525 Camino del Rio S',
-        suite: 'Suite 315 Room 8',
-        city: 'San Diego',
-        state: 'CA',
-        zipCode: '92108'
-    },
-    email: 'goldspa@gmail.com',
-    phone: '+11 123 4567 222'
+  name: 'Gold Spa',
+  logo: '/gold_spa_logo.png',
+  address: {
+    street: '2525 Camino del Rio S',
+    suite: 'Suite 315 Room 8',
+    city: 'San Diego',
+    state: 'CA',
+    zipCode: '92108'
+  },
+  email: 'goldspa@gmail.com',
+  phone: '+11 123 4567 222'
 }
 
-describe('InfoLabel', () => {
-  it('renders label text correctly', () => {
-    render(<InfoLabel>Test Label</InfoLabel>)
-
-    expect(screen.getByText('Test Label')).toBeInTheDocument()
-  })
-
-  it('applies default styling classes', () => {
-    render(<InfoLabel>Test Label</InfoLabel>)
-
-    const label = screen.getByText('Test Label')
-    expect(label).toHaveClass('font-normal', 'text-base', 'text-[#888896]', 'w-20', 'text-left')
-  })
-
-  it('accepts custom className', () => {
-    render(<InfoLabel className="custom-class">Test Label</InfoLabel>)
-
-    const label = screen.getByText('Test Label')
-    expect(label).toHaveClass('custom-class')
-  })
-
-  it('accepts id prop and uses it as data-testid', () => {
-    render(<InfoLabel id="test-label">Test Label</InfoLabel>)
-
-    const label = screen.getByTestId('test-label')
-    expect(label).toBeInTheDocument()
-    expect(label).toHaveTextContent('Test Label')
-  })
-})
+const renderBusinessInfo = (business = mockBusiness) => {
+  return render(
+    <BusinessProvider business={business}>
+      <BusinessInfo />
+    </BusinessProvider>
+  )
+}
 
 describe('BusinessInfo', () => {
   it('renders the business logo', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     const logoContainer = screen.getByTestId('business-logo')
     expect(logoContainer).toBeInTheDocument()
@@ -68,7 +46,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders the business title', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     const title = screen.getByTestId('business-title')
     expect(title).toBeInTheDocument()
@@ -76,7 +54,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders address label and values', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     const addressLabel = screen.getByTestId('address-label')
     expect(addressLabel).toBeInTheDocument()
@@ -90,7 +68,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders email label and value', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     const emailLabel = screen.getByTestId('email-label')
     expect(emailLabel).toBeInTheDocument()
@@ -102,7 +80,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders phone label and value', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     const phoneLabel = screen.getByTestId('phone-label')
     expect(phoneLabel).toBeInTheDocument()
@@ -114,7 +92,7 @@ describe('BusinessInfo', () => {
   })
 
   it('renders all contact information fields', () => {
-      render(<BusinessInfo business={mockBusiness} />)
+    renderBusinessInfo()
     
     // Check that all labels are present
     expect(screen.getByTestId('address-label')).toBeInTheDocument()
@@ -127,29 +105,29 @@ describe('BusinessInfo', () => {
     expect(screen.getByTestId('phone-value')).toBeInTheDocument()
   })
 
-    it('renders different business information when provided', () => {
-        const differentBusiness = {
-            name: 'Test Business',
-            logo: '/test_logo.png',
-            address: {
-                street: '123 Test St',
-                suite: 'Suite 100',
-                city: 'Test City',
-                state: 'TS',
-                zipCode: '12345'
-            },
-            email: 'test@business.com',
-            phone: '+1 555 123 4567'
-        }
+  it('renders different business information when provided', () => {
+    const differentBusiness = {
+      name: 'Test Business',
+      logo: '/test_logo.png',
+      address: {
+        street: '123 Test St',
+        suite: 'Suite 100',
+        city: 'Test City',
+        state: 'TS',
+        zipCode: '12345'
+      },
+      email: 'test@business.com',
+      phone: '+1 555 123 4567'
+    }
 
-        render(<BusinessInfo business={differentBusiness} />)
+    renderBusinessInfo(differentBusiness)
 
-        expect(screen.getByTestId('business-title')).toHaveTextContent('Test Business')
-        expect(screen.getByAltText('Test Business Logo')).toHaveAttribute('src', '/test_logo.png')
-        expect(screen.getByTestId('email-value')).toHaveTextContent('test@business.com')
-        expect(screen.getByTestId('phone-value')).toHaveTextContent('+1 555 123 4567')
-        expect(screen.getByTestId('address-values')).toHaveTextContent('123 Test St')
-        expect(screen.getByTestId('address-values')).toHaveTextContent('Suite 100')
-        expect(screen.getByTestId('address-values')).toHaveTextContent('Test City, TS 12345')
-    })
+    expect(screen.getByTestId('business-title')).toHaveTextContent('Test Business')
+    expect(screen.getByAltText('Test Business Logo')).toHaveAttribute('src', '/test_logo.png')
+    expect(screen.getByTestId('email-value')).toHaveTextContent('test@business.com')
+    expect(screen.getByTestId('phone-value')).toHaveTextContent('+1 555 123 4567')
+    expect(screen.getByTestId('address-values')).toHaveTextContent('123 Test St')
+    expect(screen.getByTestId('address-values')).toHaveTextContent('Suite 100')
+    expect(screen.getByTestId('address-values')).toHaveTextContent('Test City, TS 12345')
+  })
 })
