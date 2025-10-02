@@ -43,6 +43,29 @@ src/
 - **`src/utils/`**: Helper functions, validators, and formatters
 - **`src/app/`**: Next.js app directory with pages and layouts
 
+## 🚀 Live Demo
+
+**Live Application**: [https://moxie-booking.vercel.app/](https://moxie-booking.vercel.app/)
+
+The application is deployed on Vercel with automatic CI/CD. Every commit to the `main` branch triggers a new deployment.
+
+## 📁 Code Access
+
+**Repository**: [https://github.com/jcmordan/moxie-booking](https://github.com/jcmordan/moxie-booking)
+
+**Clone the repository**:
+```bash
+git clone https://github.com/jcmordan/moxie-booking.git
+cd moxie-booking
+pnpm install
+pnpm dev
+```
+
+**Local Development**:
+- Run `pnpm dev` to start the development server
+- Run `pnpm test` to execute the test suite
+- Run `pnpm build` to create a production build
+
 ## 🧪 Testing
 
 Run tests with:
@@ -70,6 +93,10 @@ pnpm run test:watch
 7. **Phone Number Format**: Assumed international phone number format with country code.
 
 8. **Email Validation**: Assumed basic email format validation (HTML5 email input type).
+
+9. **CVV Validation**: Assumed CVV should be exactly 3 numeric digits with input filtering.
+
+10. **Design Implementation**: Assumed the Figma design could be implemented manually without direct access to the design tool.
 
 ### What tradeoffs are you considering in this exercise?
 
@@ -112,8 +139,10 @@ pnpm run test:watch
 11. **SEO**: No meta tags, structured data, or SEO optimization
 12. **Progressive Web App**: No PWA features or offline functionality
 13. **Advanced Testing**: No integration tests, E2E tests, or visual regression tests
-14. **Deployment**: No CI/CD pipeline or deployment configuration
-15. **Security**: No security headers, CSRF protection, or input sanitization
+14. **Security**: No security headers, CSRF protection, or input sanitization
+15. **Real-time Features**: No WebSocket connections or real-time updates
+16. **Advanced Error Handling**: No comprehensive error logging or monitoring
+17. **Data Persistence**: No local storage or session persistence across page refreshes
 
 ### How would you respond to the SMS Opt-in scope change scenario?
 
@@ -121,8 +150,9 @@ If asked to add SMS opt-in functionality, I would:
 
 1. **Immediate Response**:
    - Acknowledge the scope change and its impact on timeline
-   - Assess the complexity and effort required
-   - Communicate the additional time needed
+   - Assess the complexity and effort required (estimated 2-4 hours)
+   - Communicate the additional time needed to stakeholders
+   - Clarify requirements (mandatory vs. optional, legal compliance needs)
 
 2. **Technical Implementation**:
    ```typescript
@@ -133,37 +163,39 @@ If asked to add SMS opt-in functionality, I would:
      phoneVerified: boolean;
    }
    
-   // Add to ContactInformation component
-   <div className="flex items-center space-x-3">
-     <input
-       type="checkbox"
-       id="smsOptIn"
-       checked={data.smsOptIn}
-       onChange={(e) => handleInputChange('smsOptIn', e.target.checked)}
-       data-testid="sms-opt-in"
-     />
-     <label htmlFor="smsOptIn">
-       I agree to receive SMS notifications about my appointment
-     </label>
-   </div>
+   // Add to ContactInformation component using FormCheckbox
+   <FormCheckbox
+     id="smsOptIn"
+     name="smsOptIn"
+     label="I agree to receive SMS notifications about my appointment"
+     required={false}
+   />
    ```
 
 3. **Updated Tests**:
    - Add test for SMS opt-in checkbox rendering
    - Add test for SMS opt-in state management
    - Update form validation tests
+   - Test integration with existing form flow
 
 4. **Considerations**:
    - **Legal Compliance**: Ensure TCPA compliance for SMS opt-in
-   - **User Experience**: Clear messaging about SMS usage
+   - **User Experience**: Clear messaging about SMS usage and frequency
    - **Data Privacy**: Proper handling of phone number data
-   - **Backend Changes**: Would need SMS service integration
+   - **Backend Changes**: Would need SMS service integration (Twilio, etc.)
    - **Timeline Impact**: Additional 2-4 hours for implementation and testing
 
 5. **Scope Management**:
    - Update project requirements documentation
    - Communicate timeline adjustments to stakeholders
    - Prioritize core functionality vs. new features
+   - Consider if this affects the overall project timeline
+
+6. **Implementation Approach**:
+   - Leverage existing FormCheckbox component for consistency
+   - Use React Hook Form for state management
+   - Add proper validation and error handling
+   - Ensure responsive design compatibility
 
 ## 🔄 Future Enhancements
 
