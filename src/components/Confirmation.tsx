@@ -1,6 +1,7 @@
 'use client';
 
 import { BookingData } from '../views/BookingView';
+import GoldSpaInfo from './GoldSpaInfo';
 
 interface ConfirmationProps {
   data: BookingData;
@@ -36,34 +37,7 @@ export default function Confirmation({ data }: ConfirmationProps) {
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
         <div className="space-y-6">
           {/* Spa Information */}
-          <div className="flex flex-col items-center text-center">
-            {/* Gold Spa Logo */}
-            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            </div>
-            
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">GOLDSpa</h2>
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Gold Spa</h3>
-            
-            <div className="space-y-4 text-sm text-gray-600 text-left w-full">
-              <div>
-                <span className="font-medium text-gray-500">Address</span>
-                <p className="mt-1 text-gray-800">2525 Camino del Rio S</p>
-                <p className="text-gray-800">Suite 315 Room 8</p>
-                <p className="text-gray-800">San Diego, CA 92108</p>
-              </div>
-              <div>
-                <span className="font-medium text-gray-500">Email</span>
-                <p className="text-purple-600">goldspa@gmail.com</p>
-              </div>
-              <div>
-                <span className="font-medium text-gray-500">Phone</span>
-                <p className="text-purple-600">+11 123 4567 222</p>
-              </div>
-            </div>
-          </div>
+          <GoldSpaInfo />
 
           {/* Services */}
           <div className="border-t pt-6">
