@@ -50,9 +50,9 @@ export default function ContactInformation({ data, onDataChange, onNext }: Conta
   return (
     <div className="flex flex-col lg:flex-row gap-6">
       {/* Spa Information Card */}
-      <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
+      {/* <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2"> */}
         <GoldSpaInfo />
-      </div>
+      {/* </div> */}
 
       {/* Contact Form Card */}
       <div className="bg-white rounded-lg shadow-lg p-8 lg:w-1/2">
