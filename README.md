@@ -17,7 +17,9 @@ A responsive booking system for spa appointments built with Next.js, TypeScript,
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Testing**: Jest + React Testing Library
-- **State Management**: React Hooks
+- **Form Management**: React Hook Form
+- **Package Manager**: pnpm
+- **State Management**: React Hooks + Context API
 
 ## 📁 Project Structure
 
@@ -27,6 +29,8 @@ src/
 ├── components/             # Business-specific components
 ├── ui/                     # Generic UI components
 ├── views/                  # Page-level components
+├── contexts/               # React Context providers
+├── utils/                  # Helper functions and utilities
 └── public/                 # Static assets
 ```
 
@@ -35,14 +39,16 @@ src/
 - **`src/components/`**: Business-specific components that contain domain logic and are tied to the booking system
 - **`src/ui/`**: Generic, reusable UI components used for layout, form elements, and common interface patterns
 - **`src/views/`**: Page-level components that orchestrate the overall application flow
+- **`src/contexts/`**: React Context providers for global state management
+- **`src/utils/`**: Helper functions, validators, and formatters
 - **`src/app/`**: Next.js app directory with pages and layouts
 
 ## 🧪 Testing
 
 Run tests with:
 ```bash
-npm test
-npm run test:watch
+pnpm test
+pnpm run test:watch
 ```
 
 ## 🎯 Exercise Documentation
@@ -51,7 +57,7 @@ npm run test:watch
 
 1. **Business Data Structure**: Assumed a standardized business information structure with name, logo, address (street, suite, city, state, zipCode), email, and phone.
 
-2. **Form Validation**: Assumed basic validation requirements - all fields are required and must contain non-empty values.
+2. **Form Validation**: Assumed basic validation requirements - all fields are required and must contain non-empty values (including whitespace-only validation).
 
 3. **Payment Processing**: Assumed no actual payment processing is needed - just console logging of booking data.
 
@@ -77,7 +83,7 @@ npm run test:watch
 
 3. **State Management**:
    - **Tradeoff**: Local component state vs. global state management (Redux, Zustand)
-   - **Decision**: Used React hooks for simplicity and requirements scope
+   - **Decision**: Used React hooks + Context API for business data and React Hook Form for form state
 
 4. **Testing Coverage**:
    - **Tradeoff**: Testing all components vs. focusing on core functionality
