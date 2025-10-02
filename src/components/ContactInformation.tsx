@@ -28,9 +28,9 @@ const ContactInformation = ({ data, onDataChange, onNext }: ContactInformationPr
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl items-center lg:items-start">
           <BusinessInfo />
-          <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 lg:w-1/2 gap-6">
+          <div className="flex flex-col bg-white rounded-lg shadow-lg pt-6 pb-12 pr-15 pl-15 gap-6 lg:w-135 max-w-135">
             <Title id="contact-title">Enter your details below</Title>
             <FormProvider {...formMethods}>
               <form id="contact-form" className="flex flex-col gap-6">

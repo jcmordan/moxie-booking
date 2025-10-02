@@ -34,10 +34,10 @@ const PaymentInformation = ({ data, onDataChange, onNext }: PaymentInformationPr
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl items-center lg:items-start">
           <BusinessInfo />
 
-          <div className="flex flex-col bg-white rounded-lg shadow-lg p-8 lg:w-1/2 gap-6">
+          <div className="flex flex-col bg-white rounded-lg shadow-lg p-8 lg:w-135 max-w-135 gap-6">
             <Title id="payment-title">Secure your appointment by card</Title>
             <p className="text-sm font-normal text-[#60606C]">A credit or debit card is required to secure your appointment.</p>
             <FormProvider {...formMethods}>
